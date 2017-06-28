@@ -17,7 +17,7 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Give the type of the vehicle:");
+        System.out.println("Give the type of the vehicle (can be : car, van):");
         String vhiacleType = scanner.next();
 
         if(vhiacleType.trim().toLowerCase().equals("van")) {
