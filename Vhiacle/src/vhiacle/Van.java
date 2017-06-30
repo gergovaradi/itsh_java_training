@@ -17,6 +17,7 @@ public class Van extends Car {
      * @return weight of passangers plus cargo plus vehicle weight
      *
      */
+    @Override
     public int getGrossLoad(){
         return super.getGrossLoad() + cargoWeight;
     }

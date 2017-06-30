@@ -18,7 +18,8 @@ public class Car extends Vehicle{
      * @return weight of passangers plus the car
      *
      */
-  public int getGrossLoad() { return super.getGrossLoad()+
+    @Override
+    public int getGrossLoad() { return super.getGrossLoad()+
           (numberPassengers * super.getPERSON_AVERAGE_WEIGHT());   }
 
 

@@ -7,7 +7,7 @@ public class Vehicle {
 
     private int vehicleWeight;
 
-    private  final int PERSON_AVERAGE_WEIGHT = 75;
+    private final int PERSON_AVERAGE_WEIGHT = 75;
 
 
     /**
