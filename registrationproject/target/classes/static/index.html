@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Yellowroad</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Logo and responsive toggle -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+                    <span class="menu_item" style="display:none"><a href="index.html">Főoldal</a></span>
+                    <span class="menu_item" style="display:none"><a href="admin.html">Admin felület</a></span>
+					<span class="menu_item" style="display:none"><a href="login.html">Bejelentkezés</a></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+                	<span><img class="titleImg" src="images/yellowroad-logo-yellow.png"></span> 
+                </a>
+            </div>
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active">
+                        <a href="index.html">Főoldal</a>
+                    </li>
+                    <li>
+                        <a href="admin.html">Admin felület</a>
+                    </li>
+                    <li>
+                        <a href="login.html">Bejelentkezés</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+	<!-- Feature -->
+	<div class="jumbotron feature">
+		<div class="container">
+			<h1><span class="glyphicon glyphicon-thumbs-up"></span> Jöjjön a változás</h1>
+			<p>Regisztrálj hozzánk, hogy mindig megkapd az aktuális információkat!</p>
+			<p><a class="btn btn-primary" href="registration.html">Regisztráció</a></p>
+		</div>
+	</div>
+
+
+    <!-- Heading -->
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1 class="text-center">Rólunk</h1>
+                <p class="lead text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+				Integer in justo vel massa consectetur aliquam non dictum neque. 
+				Nullam suscipit justo vel est molestie, ac laoreet dolor pharetra. 
+				Curabitur cursus odio non purus vulputate tristique. 
+				Duis sit amet urna efficitur, auctor nulla sit amet, vehicula magna. 
+				Curabitur pulvinar pharetra felis, eget vestibulum metus sodales sed. 
+				In justo metus, varius sit amet venenatis vel, sodales vitae justo. 
+				Nulla facilisi. Morbi quis vehicula mi. 
+				Praesent varius nulla in dolor suscipit consectetur. 
+				Donec at commodo nisl. Aenean commodo iaculis nisl, ac feugiat mi elementum vitae. 
+				Donec blandit eu libero auctor porta. Nullam quis dictum massa.</p>
+				<br>
+				<h1 class="text-center">Szolgáltatások</h1>
+				<p class="lead text-center">Duis euismod nec est sit amet dignissim. In hac habitasse platea dictumst. 
+				Proin eros mauris, interdum a pharetra posuere, egestas vitae justo. 
+				Duis sit amet orci dolor. Aliquam tristique tincidunt tortor, et facilisis orci. Duis vel vestibulum nunc.
+				Donec eu nisi sit amet lorem dignissim aliquam vel quis urna. Morbi vitae lectus et mauris tristique hendrerit. 
+				Sed sit amet tincidunt felis. Etiam bibendum feugiat neque et tincidunt. 
+				Cras at consequat purus. Donec nec aliquet massa. Nam vulputate nibh dui, vel tempus mi dictum efficitur. 
+				Integer feugiat magna non libero auctor, in aliquam tortor rutrum. In bibendum aliquet iaculis.</p>
+            </div>
+        </div>
+    </div>
+	
+		
+	<!-- Footer -->
+	<footer>
+
+		<!-- Footer Links -->
+		<div class="footer-info">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4 footer-info-item">
+						<h3>Információ</h3>
+						<ul class="list-unstyled">
+							<li><a href="#">Rólunk</a></li>
+							<li><a href="#">Szolgáltatások</a></li>
+							<li><a href="#">Adatvédelem</a></li>
+							<li><a href="#">Térkép</a></li>
+							<li><a href="#">Kapcsolat</a></li>
+						</ul>
+					</div>
+					<div class="col-sm-4 footer-info-item">
+						<h3>Fiók</h3>
+						<ul class="list-unstyled">
+							<li><a href="#">Bejelentkezés</a></li>
+							<li><a href="#">Tanfolyamok</a></li>
+							<li><a href="#">Haladási napló</a></li>
+							<li><a href="#">Profil</a></li>
+							<li><a href="#">Súgó</a></li>
+						</ul>	
+					</div>
+					<div class="col-sm-4 footer-info-item">
+						<h3><span class="glyphicon glyphicon-list-alt"></span> Hírlevél</h3>
+						<p>Iratkozz fel hírlevelünkre.</p>
+						<div class="input-group">
+							<input type="email" class="form-control" placeholder="vmi@vmi.hu" id="email">
+							<span class="input-group-btn">
+								<button class="btn btn-primary" type="button" onclick="saveEmail()">
+									Feliratkozom!
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+        
+        <!-- Copyright etc -->
+        <div class="small-print">
+        	<div class="container">
+        		<p><a href="#">Minden jog fenntartva</a> | <a href="#">Adatvédelem</a> | <a href="#">Kapcsolat</a></p>
+        		<p>Copyright &copy; yellow.com 2017 </p>
+        	</div>
+        </div>
+        
+	</footer>
+
+    <script src="js/jquery-1.11.3.min.js"></script>
+	<script src="js/ie10-viewport-bug-workaround.js"></script>
+	<script src="js/script_email.js"></script>
+	<script src="js/script_menu.js"></script>
+	
+</body>
+
+</html>

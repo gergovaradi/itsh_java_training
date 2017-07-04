@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Yellowroad regisztráció</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/custom.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/users.css">
+</head>
+	<body>
+	<!-- Navigation -->
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<!-- Logo and responsive toggle -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">
+					<span><img class="titleImg" src="images/yellowroad-logo-yellow.png"></span>
+				</a>
+			</div>
+			<!-- Navbar links -->
+			<div class="collapse navbar-collapse" id="navbar">
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="index.html">Főoldal</a>
+					</li>
+					<li>
+						<a href="admin.html">Admin felület</a>
+					</li>
+					<li>
+						<a href="login.html">Bejelentkezés</a>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+	</nav>
+		<br>
+		<h1 class="text-center">Regisztrációs felület</h1>
+		<br>
+			<form class="form-inline">
+				<div class="form-group">
+
+					<label for="userName"> Felhasználónév:*</label>
+						<input id="userName" class="userName form-control" type="text" placeholder="Felhasználónév" required>
+					<br>
+					<label for="password"> Jelszó:*</label>
+						<input id="password" class="password form-control" type="password" placeholder="****" required>
+					<br>
+
+					<label for="lastNameId"> Vezetéknév:*</label>
+						<input id="lastNameId" class="lastName form-control" type="text" placeholder="Vezetéknév" required>
+					<br>
+					<label for="firstNameId">Keresztnév:*</label>
+						<input id="firstNameId" class="firstName form-control" type="text" placeholder="Keresztnév" required>
+					<br>
+					<label for="emailAddressId">Email cím:*</label>
+						<input id="emailAddressId" class="emailAddress form-control" type="text" placeholder="Fiók" required>
+						@
+						<input class="emailDomain form-control" type="text" placeholder="Domain" required>
+					<br>
+					<label for="phoneId">Mobilszám:</label>
+						<input id="phoneId" class="phone form-control" type="text" placeholder="+36...">
+					<br>
+					<label for="educationId">Iskolai végzettség:*</label>
+						<select id="educationId" class="education form-control" required>
+							<option selected disabled value="">Válassz</option>
+							<option value="Főiskola/Egyetem">Főiskola/Egyetem</option>
+							<option value="Érettségi">Érettségi</option>
+							<option value="Egyéb">Egyéb</option>
+						</select>
+					<br>
+					<label for="englishLevelId">Angol nyelvtudás:*</label>
+						<select id="englishLevelId" class="englishLevel form-control" required>
+							<option selected disabled value="">Válassz</option>
+							<option value="Alapfok">Alapfok</option>
+							<option value="Középfok">Középfok</option>
+							<option value="Felsőfok">Felsőfok</option>
+						</select>
+					<br>
+					<label for="ageId">Életkor:*</label>
+						<select id="ageId" class="age form-control" required>
+							<option selected disabled value="">Válassz</option>
+							<option value="18-25">18-25 év</option>
+							<option value="26-35">26-35 év</option>
+							<option value="35 felett">35 év felett</option>
+						</select>
+					<br>
+					<label for="newsLetterId">Hírlevél feliratkozás:</label>
+						<input id="newsLetterId" class="newsLetter" type="checkbox" checked>
+					<br>
+					<input id="submitBtn" class="btn btn-primary" type="button" value="Regisztrálok" onclick="sendToServer()">
+					<label id="message" style="display:none">Sikeres regisztráció!</label>
+				</div>
+			</form>
+		<br>
+
+	<!-- Footer -->
+	<footer>
+
+		<!-- Footer Links -->
+		<div class="footer-info">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4 footer-info-item">
+						<h3>Információ</h3>
+						<ul class="list-unstyled">
+							<li><a href="#">Rólunk</a></li>
+							<li><a href="#">Szolgáltatások</a></li>
+							<li><a href="#">Adatvédelem</a></li>
+							<li><a href="#">Térkép</a></li>
+							<li><a href="#">Kapcsolat</a></li>
+						</ul>
+					</div>
+					<div class="col-sm-4 footer-info-item">
+						<h3>Fiók</h3>
+						<ul class="list-unstyled">
+							<li><a href="#">Bejelentkezés</a></li>
+							<li><a href="#">Tanfolyamok</a></li>
+							<li><a href="#">Haladási napló</a></li>
+							<li><a href="#">Profil</a></li>
+							<li><a href="#">Súgó</a></li>
+						</ul>
+					</div>
+					<div class="col-sm-4 footer-info-item">
+						<h3><span class="glyphicon glyphicon-list-alt"></span> Hírlevél</h3>
+						<p>Iratkozz fel hírlevelünkre.</p>
+						<div class="input-group">
+							<input type="email" class="form-control" placeholder="vmi@vmi.hu" id="email">
+							<span class="input-group-btn">
+								<button class="btn btn-primary" type="button" onclick="saveEmail()">
+									Feliratkozom!
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Copyright etc -->
+		<div class="small-print">
+			<div class="container">
+				<p><a href="#">Minden jog fenntartva</a> | <a href="#">Adatvédelem</a> | <a href="#">Kapcsolat</a></p>
+				<p>Copyright &copy; yellow.com 2017 </p>
+			</div>
+		</div>
+
+	</footer>
+
+		<script src="js/jquery-1.11.3.min.js"></script>
+		<script src="js/ie10-viewport-bug-workaround.js"></script>
+		<script src="js/jquery-3.1.1.min.js"></script>
+		<script src="js/script_reg.js"></script>
+		<script src="js/script_email.js"></script>
+
+	</body>
+</html>

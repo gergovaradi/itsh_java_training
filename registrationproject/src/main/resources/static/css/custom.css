@@ -1,0 +1,156 @@
+body {
+	padding-top: 50px;
+	color: #959595;
+	}
+	
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6 {
+	color: #ffdd00;
+	}
+
+.titleImg{
+		height:150%;
+	}
+	
+.feature {
+	background: url('../images/yellow-road.jpg');
+	background-position: top right;
+	background-size: cover;
+	background-color: #000000;
+	color: white;
+	text-shadow: 1px 1px 8px black;
+	}
+
+.feature .btn {
+	text-shadow: none;
+	}
+	
+.footer-map {
+	height: 300px;
+	width: 100%;
+	background: url('../images/map.jpg');
+	background-size: cover;
+	border-color: #ccc;
+	}
+.footer-info {
+    padding: 20px 0;
+    background: #f7f7f7;
+}
+
+.footer-info,
+.footer-info a:link,
+.footer-info a:hover,
+.footer-info a:focus,
+.footer-info a:visited {
+    color: #959595;
+	}
+
+.footer-info h3 {
+	color: black;
+	font-size: 18px;
+	}
+    
+.footer-info-item {
+    padding: 0px 20px;
+    }
+    
+footer .small-print {
+	background-color: #fff;
+	padding: 30px 0;
+	text-align: center;
+}
+
+
+/*
+*************************** 
+Override Bootstrap Classes 
+***************************
+*/
+
+/* Links */
+a {
+  color: #ffdd00;
+  text-decoration: none;
+}
+a:hover,
+a:focus {
+  color: darkorange;
+  text-decoration: underline;
+}
+
+/* Navbar */
+.navbar-default {
+  background-color: #fff;
+}
+.navbar-default .navbar-brand {
+  color: #fff;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: sienna;
+  background-color: transparent;
+}
+
+/* Primary Buttons */
+.btn-primary {
+  color: #fff;
+  background-color: #ffdd00;
+  border-color: #ffdd00;
+}
+.btn-primary:focus,
+.btn-primary.focus {
+  color: #fff;
+  background-color: #ffdd00;
+  border-color: #ffdd00;
+}
+.btn-primary:hover {
+  color: #fff;
+  background-color: darkorange;
+  border-color: darkorange;
+}
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #ffdd00;
+  border-color: #ffdd00;
+}
+.btn-primary:active:hover,
+.btn-primary.active:hover,
+.open > .dropdown-toggle.btn-primary:hover,
+.btn-primary:active:focus,
+.btn-primary.active:focus,
+.open > .dropdown-toggle.btn-primary:focus,
+.btn-primary:active.focus,
+.btn-primary.active.focus,
+.open > .dropdown-toggle.btn-primary.focus {
+  color: #fff;
+  background-color: #ffdd00;
+  border-color: #ffdd00;
+}
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled.focus,
+.btn-primary[disabled].focus,
+fieldset[disabled] .btn-primary.focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+  background-color: sandybrown;
+  border-color: sandybrown;
+}

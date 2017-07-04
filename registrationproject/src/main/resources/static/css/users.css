@@ -1,0 +1,80 @@
+/*Body*/
+body{
+	background-color:white;
+	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+/*Header*/
+.titleRow{
+	background-color:black;
+	height:150px;
+	padding-top:2%;
+}
+.inputClear{
+	padding-right:10%;
+	padding-left:80%;
+	color:#ffdd00;
+	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.retweet, .trash{
+	color:#ffdd00; font-size:20px;
+}
+.retweet:hover, .trash:hover{
+	color:white;
+}
+.resultRandom{
+	padding-right:10%;
+	padding-left:80%;
+	color:#ffdd00;
+	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+/*Input fields, Labels and buttons*/
+.form-group{
+	width:100%;
+	text-align:center;
+}
+#password:focus, .age:focus, .englishLevel:focus, .education:focus, .checkBtn:focus, input[type=text]:focus{
+	border-color:#ffdd00;
+	box-shadow:0 1px 1px #ffdd00;
+}
+label{
+	padding-right:2%;
+	padding-bottom:1%;
+}
+.tableContainer{
+	width:90%;
+	margin:auto;
+}
+.table{
+	width:100%;
+}
+#findNewsLetter:hover{
+	color:#ffdd00;
+}
+#findNewsLetter:focus{
+	color:#ffdd00;
+}
+button, #button{
+	border: none;
+	text-decoration: none;
+	background-color:transparent;
+	outline:0;
+}
+#submitBtn{
+	background-color:#ffdd00;
+	border:transparent;
+}
+#submitBtn:hover{
+	background-color:darkorange;
+}
+#submitBtn:focus{
+	outline:0;
+}
+
+/*Mobile and tablet screen*/
+@media screen and (max-width: 500px) {
+	.titleRow{
+		height:100px;
+	}
+}
