@@ -17,7 +17,7 @@ public class WordSorting {
 
         System.out.println("Add meg a szöveget: ");
         Scanner scanner = new Scanner(System.in);
-        String str = scanner.nextLine().trim().replaceAll("[\\W\\d]+", " ").trim();
+        String str = scanner.nextLine().trim().replaceAll("[\\W\\d]+]", "").trim();
         List<String> wordList = Arrays.asList(str.split(" "));
         Collections.sort(wordList);
 
