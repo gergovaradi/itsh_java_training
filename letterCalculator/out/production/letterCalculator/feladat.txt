@@ -1,3 +1,0 @@
-Készíts egy programot, amely megszámolja a parancssori argumentumként megadott fájl szavaira, hogy azokban hány különböző betű van
-(kis-, és nagybetűk között ne tegyünk különbséget, és az egyéb karakterekkel ne foglalkozzunk)!
- A megvalósításhoz használj halmazt ( Set<Character> ,  String#toCharArray() )!

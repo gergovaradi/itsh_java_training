@@ -1,6 +1,0 @@
-Készíts egy programot, amely a parancssori argumentumként megadott fájl szavait 
-lexikografikusan rendezi, az eredményt kiírja a képernyõre, és el is menti egy 
-(szintén parancssori argumentumként megadott) fájlba! A feldolgozás elõtt minden 
-nem alfanumerikus karaktert távolíts el a szavakból. A megvalósításhoz használ egy 
-tetszõleges lista adatszerkezetet ( ArrayList ,  LinkedList ,  Stack ,  Vector ), 
-valamint a  java.util.Collections#sort()  függvényt!
