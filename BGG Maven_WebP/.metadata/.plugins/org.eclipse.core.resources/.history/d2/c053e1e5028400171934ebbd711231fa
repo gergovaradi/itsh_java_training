@@ -1,0 +1,5 @@
+package databaseConnection;
+
+public class GetDataFromDB {
+
+}
