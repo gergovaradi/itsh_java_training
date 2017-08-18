@@ -1,0 +1,3 @@
+INDEX VERSION 1.126
+C:\ITSH Java master\BGG Maven_WebP\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2067904622.index
+\BGG\src\main\resources
