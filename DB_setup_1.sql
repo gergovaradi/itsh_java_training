@@ -6,7 +6,7 @@ USE testdb;
 
 -- Create table User
 CREATE TABLE user_account(
-        id INTEGER not null,
+        id INTEGER not null AUTO_INCREMENT,
         name VARCHAR(30) not null,
         password VARCHAR(280) not null,
         salt VARCHAR(280) not null,
@@ -15,11 +15,11 @@ CREATE TABLE user_account(
 
 -- Insert some test data to user table
 
-INSERT INTO user_account (id, name, password, salt)
-VALUES (1,'tom','tom001', '1234');
+INSERT INTO user_account (name, password, salt)
+VALUES ('tom','tom001', '1234');
  
-insert into user_account (id, name, password, salt)
-VALUES (2, 'jerry', 'jerry001', '4321');
+insert into user_account (name, password, salt)
+VALUES ('jerry', 'jerry001', '4321');
 
 -- Create table product
 
@@ -51,20 +51,21 @@ CREATE TABLE Orders (
     );
     
 CREATE TABLE User_information (
-        id INTEGER not null,
+        id INTEGER not null AUTO_INCREMENT,
         Address varchar(255) not null,
         Email varchar(128) not null,
         Full_Name varchar(60) not null,
-        Phone varchar(128) not null
+        Phone varchar(128) not null,
+        primary key (id)
     );
 
 -- Insert some test data to table    
 
-INSERT INTO User_information (id, Address, Email, Full_Name, Phone)
-VALUES (1, 'testString', 'tom.01@gmail.com', 'Thomas', '0695382385' );
+INSERT INTO User_information (Address, Email, Full_Name, Phone)
+VALUES ('testString', 'tom.01@gmail.com', 'Thomas', '0695382385' );
 
-INSERT INTO User_information (id, Address, Email, Full_Name, Phone)
-VALUES(2, 'TestString', 'jerry.01@gmail.com', 'Jerry', '0695382385' );
+INSERT INTO User_information (Address, Email, Full_Name, Phone)
+VALUES('TestString', 'jerry.01@gmail.com', 'Jerry', '0695382385' );
 
 /*Select for userdata
 SELECT user_account.name,password,salt,

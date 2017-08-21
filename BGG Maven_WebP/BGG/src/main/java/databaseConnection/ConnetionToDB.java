@@ -83,7 +83,7 @@ public class ConnetionToDB {
 				String phone = rs.getString("phone");
 				beans.UserInformation userInformation = new beans.UserInformation(address, email, fullName, phone);
 				UserInformationList.add(userInformation);
-				System.out.println("User phone-number: " + phone );
+				System.out.println("User phone-number: " + phone + " " );
 				
 			}
 			
@@ -93,13 +93,35 @@ public class ConnetionToDB {
 
 		return UserInformationList;
 	}
+	//Geri, 08.21 : Execute inserts to table "user_information" and "user_account" on registration.
+	// IMPORTANT : When we get a String from front-end we should concat between '+..+' like this: 'example'
+		public void registration( String name, String password, String salt, String fullName,
+				String email, String phone, String address ){
+			try{
+				String AccQuerry = "INSERT INTO user_account (name, password, salt) VALUES(" + name + ", " 
+				+ password + "," + salt +"); "; 
+				String InfQuerry ="INSERT INTO user_information (address, email, full_Name, phone) VALUES(" + address + ","
+				+ email + "," + fullName + "," + phone +");";
+				
+				st.executeUpdate(AccQuerry);
+				st.executeUpdate(InfQuerry);
+				System.out.println("Succsesfull registration.");
+			}
+			catch(Exception e){
+				System.out.println("Send data to DB error: " + e.getMessage());
+			}
+			
+			
+		}
 	
 	
 	// Geri, 08.21 :  main method for testing
 	public static void main(String[] args) {
 		ConnetionToDB connect = new ConnetionToDB();
-		connect.getDataFromProduts();
-		connect.getDataFromUserAccount();
-		connect.getDataFromUserInformation();
+		//connect.getDataFromProduts();
+		//connect.getDataFromUserAccount();
+		//connect.getDataFromUserInformation();
+		connect.registration("'kbela'", "'k123'", "'salt1'", "'Kovács Béla'",
+				"'kovacs.bela@gmail.com'", "'06305672966'", "'1191 Bp Fõ u.35.'");
 	}
 }
