@@ -34,10 +34,10 @@ CREATE TABLE products(
 -- Insert some test data to table
 
 INSERT INTO products (id, name, price, quantity)
-values ('1', 'TEST_Product1', 100, 230);
+values (1, 'TEST_Product1', 100, 230);
  
 INSERT INTO products (id, name, price, quantity)
-VALUES ('2', 'TEST_Product2', 90, 400);
+VALUES (2, 'TEST_Product2', 90, 400);
 
 -- Create tables for Orders
 
@@ -51,15 +51,27 @@ CREATE TABLE Orders (
     );
     
 CREATE TABLE User_information (
-        user_id INTEGER not null,
+        id INTEGER not null,
         Address varchar(255) not null,
         Email varchar(128) not null,
-        Name varchar(60) not null,
+        Full_Name varchar(60) not null,
         Phone varchar(128) not null
     );
 
 -- Insert some test data to table    
 
+INSERT INTO User_information (id, Address, Email, Full_Name, Phone)
+VALUES (1, 'testString', 'tom.01@gmail.com', 'Thomas', '0695382385' );
+
+INSERT INTO User_information (id, Address, Email, Full_Name, Phone)
+VALUES(2, 'TestString', 'jerry.01@gmail.com', 'Jerry', '0695382385' );
+
+/*Select for userdata
+SELECT user_account.name,password,salt,
+userinformation.full_name,phone,address,email
+FROM user_account JOIN user_information 
+ON user_account.id = user_information.id;
+*/
      
 -- Create table for Billing
 
