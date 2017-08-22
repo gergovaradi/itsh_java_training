@@ -128,24 +128,58 @@ public class ConnetionToDB {
 	
 	//Geri, 08.21 : Execute inserts to table "user_information" and "user_account" when someone make a registration.
 	// IMPORTANT : When we get a String from front-end we should concat between '+..+' like this: 'example'
-		public void registration( String name, String password, String salt, String fullName,
+	public void registration( String name, String password, String salt, String fullName,
 				String email, String phone, String address ){
-			try{
-				String AccQuerry = "INSERT INTO user_account (name, password, salt) VALUES(" + name + ", " 
-				+ password + "," + salt +"); "; 
-				String InfQuerry ="INSERT INTO user_information (address, email, full_Name, phone) VALUES(" + address + ","
-				+ email + "," + fullName + "," + phone +");";
+		try{
+			String AccQuerry = "INSERT INTO user_account (name, password, salt) VALUES(" + name + ", " 
+			+ password + "," + salt +"); "; 
+			String InfQuerry ="INSERT INTO user_information (address, email, full_Name, phone) VALUES(" + address + ","
+			+ email + "," + fullName + "," + phone +");";
 				
-				st.executeUpdate(AccQuerry);
-				st.executeUpdate(InfQuerry);
-				System.out.println("Succsesfull registration.");
+			st.executeUpdate(AccQuerry);
+			st.executeUpdate(InfQuerry);
+			System.out.println("Succsesfull registration.");
 			}
-			catch(Exception e){
-				System.out.println("Send data to DB error: " + e.getMessage());
-			}
-			
-			
+		catch(Exception e){
+			System.out.println("Send data to DB error: " + e.getMessage());
+			}							
 		}
+	
+	//Geri, 08.22 : save an order in DB
+	public void order( int orderNumber, String userName, String productName,
+			int quantity){
+		
+	try{
+		String selectUserIdQuerry = "SELECT id FROM user_account WHERE name =" + userName;
+		String selectProductIdQerry = "SELECT id FROM products WHERE product_name = " + productName;
+		
+		
+		rs = st.executeQuery(selectUserIdQuerry);
+		// set the cursor to the correct place (it is default before the first row)
+		rs.next();
+		// getRow gives back the number of rows of resultSet, if 0 then the user is not in the DB 
+		if(rs.getRow() == 0){
+			//System.out.println(rs.getRow()); ---> give 0 if not in DB 
+			throw new RuntimeException("User not found.");
+		}
+		int userId = rs.getInt("id");
+		rs = st.executeQuery(selectProductIdQerry);
+		rs.next();
+		if(rs.getRow() == 1){
+			throw new RuntimeException("Product not found.");
+		}
+		int productId = rs.getInt("id");
+		// print line for test
+		System.out.println("Uid: " + userId + ", " + "Pid: " + productId);
+		
+		String insertToOrdersQuerry = "INSERT INTO Orders (order_number, product_id, user_id, quantity) VALUES("+orderNumber + "," + productId +"," + userId +"," + quantity + ")";
+		st.executeUpdate(insertToOrdersQuerry);
+		System.out.println("Succsesfull order");
+		}
+	catch(Exception e){
+		System.out.println("Send data to DB error: " + e.getMessage());
+		}							
+	}
 	
 	
 	// Geri, 08.21 :  main method for testing
@@ -156,6 +190,8 @@ public class ConnetionToDB {
 		//connect.createProductList();
 		//connect.createUserAccountList();
 		//connect.createUserInformationList();
-		connect.createOrderList();
+		//connect.createOrderList();
+		connect.order(2, "'jerry'", "'TEST_Product1'", 5);
+		
 	}
 }

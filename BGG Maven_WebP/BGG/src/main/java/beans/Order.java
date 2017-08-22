@@ -2,12 +2,13 @@ package beans;
 
 import java.time.LocalDate;
 
-public class Order {
-	private int orderNumber;
-	private LocalDate orderDate;
-	private String userName;
-	private String productName;
-	private int quantity;
+	public class Order {
+		
+	 private int orderNumber;
+	 private LocalDate orderDate;
+	 private String userName;
+	 private String productName;
+	 private int quantity;
 	
 	public Order(int orderNumber, LocalDate orderDate, String userName,
 			String productName, int quantity) {
