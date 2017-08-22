@@ -75,9 +75,9 @@ public class ConnetionToDB {
 		return UserAccountList;
 	}
 	
-	// Geri, 08.21 : Create a list of user informations from DB data.
-	public List<beans.UserInformation> createUserInformationList(){
-		List<beans.UserInformation> UserInformationList = new ArrayList<beans.UserInformation>();
+	// Geri, 08.21 : Create a list of costumers from DB data.
+	public List<beans.Customers> createUserInformationList(){
+		List<beans.Customers> UserInformationList = new ArrayList<beans.Customers>();
 		try{
 			String query = "SELECT * FROM User_information";
 			rs = st.executeQuery(query);
@@ -86,10 +86,10 @@ public class ConnetionToDB {
 				String email = rs.getString("email");
 				String fullName = rs.getString("full_name");
 				String phone = rs.getString("phone");
-				beans.UserInformation userInformation = new beans.UserInformation(address, email, fullName, phone);
+				beans.Customers userInformation = new beans.Customers(address, email, fullName, phone);
 				UserInformationList.add(userInformation);
 				//print line for test
-				System.out.println("User phone-number: " + phone + " " );
+				System.out.println("Costumer phone-number: " + phone + " " );
 				
 			}
 			
@@ -126,18 +126,13 @@ public class ConnetionToDB {
 		return Orders;
 	}
 	
-	//Geri, 08.21 : Execute inserts to table "user_information" and "user_account" when someone make a registration.
+	//Geri, 08.21 : Execute inserts to table "Customers"  when a user register a customer.
 	// IMPORTANT : When we get a String from front-end we should concat between '+..+' like this: 'example'
-	public void registration( String name, String password, String salt, String fullName,
-				String email, String phone, String address ){
+	public void registration( String fullName, String email, String phone, String address ){
 		try{
-			String AccQuerry = "INSERT INTO user_account (name, password, salt) VALUES(" + name + ", " 
-			+ password + "," + salt +"); "; 
-			String InfQuerry ="INSERT INTO user_information (address, email, full_Name, phone) VALUES(" + address + ","
-			+ email + "," + fullName + "," + phone +");";
-				
-			st.executeUpdate(AccQuerry);
-			st.executeUpdate(InfQuerry);
+			String querry ="INSERT INTO Customers (address, email, full_Name, phone) VALUES(" + address + ","
+			+ email + "," + fullName + "," + phone +");";	
+			st.executeUpdate(querry);
 			System.out.println("Succsesfull registration.");
 			}
 		catch(Exception e){
@@ -146,13 +141,13 @@ public class ConnetionToDB {
 		}
 	
 	//Geri, 08.22 : save an order in DB
-	public void order( int orderNumber, String userName, String productName,
+	public void order( int orderNumber, String userName, String productName, String customerName,
 			int quantity){
 		
 	try{
 		String selectUserIdQuerry = "SELECT id FROM user_account WHERE name =" + userName;
 		String selectProductIdQerry = "SELECT id FROM products WHERE product_name = " + productName;
-		
+		String selectCostumerIdQerry = "SELECT id FROM customers WHERE full_name = " + customerName;
 		
 		rs = st.executeQuery(selectUserIdQuerry);
 		// set the cursor to the correct place (it is default before the first row)
@@ -163,16 +158,24 @@ public class ConnetionToDB {
 			throw new RuntimeException("User not found.");
 		}
 		int userId = rs.getInt("id");
+		
 		rs = st.executeQuery(selectProductIdQerry);
 		rs.next();
-		if(rs.getRow() == 1){
+		if(rs.getRow() == 0){
 			throw new RuntimeException("Product not found.");
 		}
 		int productId = rs.getInt("id");
-		// print line for test
-		System.out.println("Uid: " + userId + ", " + "Pid: " + productId);
 		
-		String insertToOrdersQuerry = "INSERT INTO Orders (order_number, product_id, user_id, quantity) VALUES("+orderNumber + "," + productId +"," + userId +"," + quantity + ")";
+		rs = st.executeQuery(selectCostumerIdQerry);
+		rs.next();
+		if(rs.getRow() == 0){
+			throw new RuntimeException("Customer not found.");
+		}
+		int customerId = rs.getInt("id");
+		// print line for test
+		System.out.println("Uid: " + userId + ", " + "Pid: " + productId + ", " + "Cid: " + customerId);
+		
+		String insertToOrdersQuerry = "INSERT INTO Orders (order_number, product_id, user_id, customer_id, quantity) VALUES("+orderNumber + "," + productId +"," + userId +","+ customerId +"," + quantity + ")";
 		st.executeUpdate(insertToOrdersQuerry);
 		System.out.println("Succsesfull order");
 		}
@@ -185,13 +188,12 @@ public class ConnetionToDB {
 	// Geri, 08.21 :  main method for testing
 	public static void main(String[] args) {
 		ConnetionToDB connect = new ConnetionToDB();
-		/*connect.registration("'kbela'", "'k123'", "'salt1'", "'Kovács Béla'",
-				"'kovacs.bela@gmail.com'", "'06305672966'", "'1191 Bp Fõ u.35.'");*/
+		//connect.registration("'Kovács Béla'","'kovacs.bela@gmail.com'", "'06305672966'", "'1191 Bp Fõ u.35.'");
 		//connect.createProductList();
 		//connect.createUserAccountList();
 		//connect.createUserInformationList();
 		//connect.createOrderList();
-		connect.order(2, "'jerry'", "'TEST_Product1'", 5);
+		connect.order(2, "'jerry'", "'TEST_Product1'","'Jerry Mause'", 5);
 		
 	}
 }

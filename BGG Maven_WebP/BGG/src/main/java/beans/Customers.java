@@ -2,13 +2,13 @@ package beans;
 
 //Geri, 08.21 : Java bean for store user informations.
 
-public class UserInformation {
+public class Customers {
 	private String name;
 	private String address;
 	private String phone;
 	private String email;
 	
-	public UserInformation(String name, String address, String phone,
+	public Customers(String name, String address, String phone,
 			String email) {
 		super();
 		this.name = name;

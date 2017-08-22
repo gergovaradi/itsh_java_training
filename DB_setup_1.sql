@@ -48,20 +48,21 @@ CREATE TABLE Orders (
         Date datetime not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         product_id INTEGER not null,
         user_id INTEGER not null,
+        customer_id INTEGER not null,
         quantity INTEGER not null,
         primary key (id)
     );
     
  -- Insert test data to Orders
  
- INSERT INTO Orders (order_number, product_id, user_id, quantity) VALUES (1,1,1,10);
+ INSERT INTO Orders (order_number, product_id, user_id, quantity, customer_id) VALUES (1,1,1,1,10);
     
  /*SELECT for order java bean 
  SELECT orders.order_number,orders.date,orders.quantity,products.product_name,user_account.name FROM
  orders JOIN products ON orders.product_id = products.id
         JOIN user_account ON orders.user_id = user_account.id;
    */ 
-CREATE TABLE User_information (
+CREATE TABLE Customers (
         id INTEGER not null AUTO_INCREMENT,
         Address varchar(255) not null,
         Email varchar(128) not null,
@@ -72,11 +73,11 @@ CREATE TABLE User_information (
 
 -- Insert some test data to table    
 
-INSERT INTO User_information (Address, Email, Full_Name, Phone)
-VALUES ('testString', 'tom.01@gmail.com', 'Thomas', '0695382385' );
+INSERT INTO Customers (Address, Email, Full_Name, Phone)
+VALUES ('testString', 'tom.01@gmail.com', 'Thomas Cat', '0695382385' );
 
-INSERT INTO User_information (Address, Email, Full_Name, Phone)
-VALUES('TestString', 'jerry.01@gmail.com', 'Jerry', '0695382385' );
+INSERT INTO Customers (Address, Email, Full_Name, Phone)
+VALUES('TestString', 'jerry.01@gmail.com', 'Jerry Mause', '0695382386' );
 
 /*Select for userdata
 SELECT user_account.name,password,salt,
