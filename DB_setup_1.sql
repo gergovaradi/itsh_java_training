@@ -7,7 +7,7 @@ USE testdb;
 -- Create table User
 CREATE TABLE user_account(
         id INTEGER not null AUTO_INCREMENT,
-        name VARCHAR(30) not null,
+        name VARCHAR(30) not null unique,
         password VARCHAR(280) not null,
         salt VARCHAR(280) not null,
         primary key (id)
@@ -24,8 +24,8 @@ VALUES ('jerry', 'jerry001', '4321');
 -- Create table product
 
 CREATE TABLE products(
-        id INTEGER not null,
-        name VARCHAR(128) not null,
+        id INTEGER not null AUTO_INCREMENT,
+        product_name VARCHAR(128) not null,
         price double precision not null,
         quantity INTEGER not null,
         primary key (id)
@@ -33,23 +33,34 @@ CREATE TABLE products(
 
 -- Insert some test data to table
 
-INSERT INTO products (id, name, price, quantity)
+INSERT INTO products (id, product_name, price, quantity)
 values (1, 'TEST_Product1', 100, 230);
  
-INSERT INTO products (id, name, price, quantity)
+INSERT INTO products (id, product_name, price, quantity)
 VALUES (2, 'TEST_Product2', 90, 400);
 
 -- Create tables for Orders
 
 
 CREATE TABLE Orders (
-        id INTEGER not null,
-        Date TIMESTAMP not null,
+        id INTEGER not null AUTO_INCREMENT,
+        order_number INTEGER not null,
+        Date datetime not null DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         product_id INTEGER not null,
         user_id INTEGER not null,
-        quantity INTEGER not null
+        quantity INTEGER not null,
+        primary key (id)
     );
     
+ -- Insert test data to Orders
+ 
+ INSERT INTO Orders (order_number, product_id, user_id, quantity) VALUES (1,1,1,10);
+    
+ /*SELECT for order java bean 
+ SELECT orders.order_number,orders.date,orders.quantity,products.product_name,user_account.name FROM
+ orders JOIN products ON orders.product_id = products.id
+        JOIN user_account ON orders.user_id = user_account.id;
+   */ 
 CREATE TABLE User_information (
         id INTEGER not null AUTO_INCREMENT,
         Address varchar(255) not null,
