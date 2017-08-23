@@ -64,9 +64,9 @@ CREATE TABLE Orders (
    */ 
 CREATE TABLE Customers (
         id INTEGER not null AUTO_INCREMENT,
+        Full_Name varchar(60) not null,
         Address varchar(255) not null,
         Email varchar(128) not null,
-        Full_Name varchar(60) not null,
         Phone varchar(128) not null,
         primary key (id)
     );
