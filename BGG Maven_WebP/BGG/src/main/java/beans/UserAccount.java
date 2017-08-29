@@ -1,12 +1,21 @@
 package beans;
 
+import java.io.Serializable;
+
 //Geri, 08.21 : Java bean for store user accounts.
 
-public class UserAccount {
+	public class UserAccount implements Serializable {
 	
-	private String userName;
-	private String password;
-	private String salt;
+
+		private static final long serialVersionUID = 80984795963057557L;
+	
+		private String userName;
+		private String password;
+		private String salt;
+		
+	public UserAccount(){
+		
+	}	
 	
 	public UserAccount(String userName, String password, String salt) {
 		super();
@@ -38,11 +47,6 @@ public class UserAccount {
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
-	
-	
-	
-
-	
 	
 
 }

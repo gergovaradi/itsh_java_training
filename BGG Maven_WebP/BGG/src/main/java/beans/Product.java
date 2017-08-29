@@ -1,12 +1,21 @@
 package beans;
 
+import java.io.Serializable;
+
 //Geri, 08.21 : Java bean for store products.
 
-public class Product {
+public class Product implements Serializable {
+	
+
+	private static final long serialVersionUID = -7932463630518208353L;
 	
 	private String name;
 	private double price;
 	private int quantity;
+	
+	public Product(){
+		
+	};
 	
 	public Product(String name, double price, int quantity ) {
 		super();

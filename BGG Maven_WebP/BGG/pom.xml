@@ -7,7 +7,9 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>BGG Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  
   <dependencies>
+   <!-- junit -->
     <dependency>
       	<groupId>junit</groupId>
       	<artifactId>junit</artifactId>
@@ -34,7 +36,9 @@
     <version>5.3</version>
 </dependency>
   </dependencies>
+  
   <build>
     <finalName>BGG</finalName>
   </build>
+  
 </project>

@@ -1,12 +1,24 @@
 package beans;
 
+import java.io.Serializable;
+
 //Geri, 08.21 : Java bean for store user informations.
 
-public class Customers {
+public class Customers implements Serializable{
+	
+// Needed for serializable classes 
+//explanation: https://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it
+	
+	private static final long serialVersionUID = -1326315281555949485L;
+	
 	private String name;
 	private String address;
 	private String phone;
 	private String email;
+	
+	public Customers(){
+		
+	};
 	
 	public Customers(String name, String address, String phone,
 			String email) {
@@ -16,6 +28,8 @@ public class Customers {
 		this.phone = phone;
 		this.email = email;
 	}
+	
+
 
 	public String getName() {
 		return name;

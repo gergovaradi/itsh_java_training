@@ -35,7 +35,28 @@ public class ManageProducts {
 
 		return productList;
 	}
+//get a product from DB
+	public beans.Product getSpecificProduct(int id) {
+		beans.Product product = null;
+		try {
+			String query = "SELECT * FROM Products WHER id=" + id;
+			rs = st.executeQuery(query);
+			while (rs.next()) {
+				String name = rs.getString("name");
+				double price = rs.getDouble("price");
+				int quantity = rs.getInt("quantity");
+				// int productId = rs.getInt("id");
+				beans.Product prod = new beans.Product(name, price, quantity);
+				product = prod;
+				// print line for test
+				System.out.println("Product name: " + name);
+			}
+		} catch (Exception e) {
+			System.out.println("Get data from DB error: " + e.getMessage());
+		}
 
+		return product;
+	}
 	// Geri, 08.23 : Execute inserts to table "Products".
 	public void productRegistration(String product_name, double price,
 			int quantity) {
@@ -87,8 +108,9 @@ public class ManageProducts {
 
 	public static void main(String[] args) {
 		ManageProducts productmanager = new ManageProducts();
-		// productmanager.productUpdate("'TEST_Product2'", 6, 500, 1);
-		productmanager.productDelete(1);
+		productmanager.productUpdate("'testP2'", 5, 1000, 4);
+		//productmanager.productDelete(1);
+		//productmanager.productRegistration("'testP3'", 5, 1000);
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 
+import com.mysql.jdbc.PreparedStatement;
 
 
 public class ConnetionToDB {
@@ -12,8 +13,9 @@ public class ConnetionToDB {
 	private Connection con;
 	private Statement st;
 	private ResultSet rs;
+	private PreparedStatement prs;
 	
-	/* Geri, 08.21 :
+	/** Geri, 08.21 :
 	set the connection with the DB, all have to use her/ his own URL at "Connection URL" 
 	and acc name / pass at "con". */
 	public ConnetionToDB(){
@@ -45,6 +47,12 @@ public class ConnetionToDB {
 	}
 	public void setRs(ResultSet rs) {
 		this.rs = rs;
+	}
+	public PreparedStatement getPrs() {
+		return prs;
+	}
+	public void setPrs(PreparedStatement prs) {
+		this.prs = prs;
 	}
 	
 }
