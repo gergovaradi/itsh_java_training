@@ -82,12 +82,14 @@ public class ManageOrders {
 			// print line for test
 			System.out.println("Uid: " + userId + ", " + "Pid: " + productId
 					+ ", " + "Cid: " + customerId);
+			
 			prs = con.prepareStatement("db.insertToOrdersQuerry");
-			prs.setString(1, fullName);
-			prs.setString(2, email);
-			prs.setString(3, phone);
-			prs.setString(4, address);
-			st.executeUpdate(insertToOrdersQuerry);
+			prs.setInt(1, orderNumber);
+			prs.setInt(2, productId);
+			prs.setInt(3, userId);
+			prs.setInt(4, customerId);
+			prs.setInt(5, quantity);
+			prs.executeUpdate();
 			System.out.println("Succsesfull order");
 			
 			// Decrease the quantity in the inventory:
