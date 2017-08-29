@@ -1,16 +1,16 @@
 package operations;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-
-
-
-
 import databaseConnection.ConnetionToDB;
+
+
 
 public class ManageCostumers {
 
@@ -19,10 +19,14 @@ public class ManageCostumers {
 	private java.sql.Connection con = connection.getCon();
 	private ResourceBundle query = ResourceBundle.getBundle("querys",new Locale("hu","HU"));
 	private java.sql.PreparedStatement prs;
+
+	private static final Logger logger = LogManager.getLogger(ManageCostumers.class);
 	
 
 	// Geri, 08.21 : Create a list of costumers from DB data.
 	public List<beans.Customers> createCostumerList() {
+		logger.info("Entering the createCostumerList method");
+
 		List<beans.Customers> UserInformationList = new ArrayList<beans.Customers>();
 		try {
 			prs = con.prepareStatement(query.getString("db.getAllCostumerData"));
@@ -36,10 +40,11 @@ public class ManageCostumers {
 						email, fullName, phone);
 				UserInformationList.add(customer);
 				// print line for test
-				System.out.println("Costumer phone-number: " + phone + " ");
+
+				logger.info("Costumer phonenumber: " + phone + " ");
 			}
 		} catch (Exception e) {
-			System.out.println("Get data from DB error: " + e.getMessage());
+			logger.error("Get data from DB error: " + e.getMessage());
 		}
 
 		return UserInformationList;
@@ -65,9 +70,9 @@ public class ManageCostumers {
 			prs.setString(3, phone);
 			prs.setString(4, address);
 			prs.executeUpdate();
-			System.out.println("Succsesfull registration.");
+			logger.info("Succsesful registration.");
 		} catch (Exception e) {
-			System.out.println("Send data to DB error: " + e.getMessage());
+			logger.error("Send data to DB error: " + e.getMessage());
 		}
 	}
 
@@ -80,14 +85,14 @@ public class ManageCostumers {
 	// check the id in DB
 			int test = prs.executeUpdate();
 			if (test == 0) {
-				System.out.println("No customer in the DB with this ID.");
+				logger.error("No customer in the DB with this ID.");
 			}
 			else {
 			prs.executeUpdate();
-			System.out.println(" Succsesfull delete Custommer: " + ID);
+			logger.info("Succsesfully deleted Custommer: " + ID);
 			}
 		} catch (Exception e) {
-			System.out.println("Send data to DB error: " + e.getMessage());
+			logger.error("Send data to DB error: " + e.getMessage());
 		}
 	}
 
@@ -103,9 +108,10 @@ public class ManageCostumers {
 			prs.setString(4, phone);
 			prs.setInt(5, id);
 			prs.executeUpdate();
-			System.out.println("Succsesfull update on: " + fullName + " id: " + id);
+
+			logger.info("Succsesful update on: " + fullName + " id: " + id);
 		} catch (Exception e) {
-			System.out.println("Send data to DB error: " + e.getMessage());
+			logger.error("Send data to DB error: " + e.getMessage());
 		}
 	}
 
@@ -114,7 +120,7 @@ public class ManageCostumers {
 		//costumermanager.createCostumerList();
 		//costumermanager.customerRegistration("Gizi", "gizi@test.com","06304294821", "test street 52.");
 		//costumermanager.customerDelete(10);
-		costumermanager.customerUpdate("Gergı M·trai", "1191 BP","gergo.matrai@gmatrai.com", "06304892599", 1);
+		costumermanager.customerUpdate("Gerg≈ë M√°trai", "1191 BP","gergo.matrai@gmatrai.com", "06304892599", 1);
 		
 	}
 }
