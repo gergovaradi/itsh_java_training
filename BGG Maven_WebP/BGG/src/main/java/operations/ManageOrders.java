@@ -52,38 +52,43 @@ public class ManageOrders {
 			String customerName, int quantity) {
 
 		try {
-			prs = con.prepareStatement(query.getString("selectUserIdQuerry"));
+			prs = con.prepareStatement(query.getString("db.selectUserIdQuery"));
+			prs.setString(1, userName);
 			rs = prs.executeQuery();
+			int userId = 0;
 			// set the cursor to the correct place (it is default before then first row)
 			rs.next();
 			// getRow gives back the number of rows of resultSet, if 0 then the user is not in the DB
 			if (rs.getRow() == 0) {
-				// System.out.println(rs.getRow()); ---> give 0 if not in DB
 				throw new RuntimeException("User not found.");
 			}
-			int userId = rs.getInt("id");
+			userId = rs.getInt("id");
 
-			prs = con.prepareStatement(query.getString("db.selectUserIdQuerry"));
-			
+			prs = con.prepareStatement(query.getString("db.selectProductIdQuery"));
+			prs.setString(1, productName);
 			rs = prs.executeQuery();
+			int productId = 0;
 			rs.next();
 			if (rs.getRow() == 0) {
 				throw new RuntimeException("Product not found.");
 			}
-			int productId = rs.getInt("id");
+			productId = rs.getInt("id");
 
-			prs = con.prepareStatement(query.getString("db.selectCostumerIdQuerry"));
+			prs = con.prepareStatement(query.getString("db.selectCostumerIdQuery"));
+			prs.setString(1, customerName);
 			rs = prs.executeQuery();
+			int customerId = 0;
 			rs.next();
 			if (rs.getRow() == 0) {
 				throw new RuntimeException("Customer not found.");
 			}
-			int customerId = rs.getInt("id");
-			// print line for test
-			System.out.println("Uid: " + userId + ", " + "Pid: " + productId
-					+ ", " + "Cid: " + customerId);
+			customerId = rs.getInt("id");
 			
-			prs = con.prepareStatement("db.insertToOrdersQuerry");
+			//print line for test
+			System.out.println("Uid: " + userId + ", " + "Pid: " + productId
+					+ ", " + "Cid: " + customerId + "Q= " + quantity + "ON= " + orderNumber);
+			
+			prs = con.prepareStatement(query.getString("db.insertToOrdersQuery"));
 			prs.setInt(1, orderNumber);
 			prs.setInt(2, productId);
 			prs.setInt(3, userId);
@@ -105,17 +110,18 @@ public class ManageOrders {
 	private void updateQuantityOrder(int quantity, int product_id){
 		
 		int quantityInDB;
-		String getProductQuantityQuerry ="SELECT quantity FROM products WHERE id=" + product_id;
 		
 		try {
-			rs = st.executeQuery(getProductQuantityQuerry);
+			prs = con.prepareStatement(query.getString("db.getProductQuantityQuery"));
+			prs.setInt(1, product_id);
+			rs = prs.executeQuery();
 			rs.next();
 			quantityInDB = rs.getInt("quantity");
-			
-			String updateQuerry = "UPDATE Products SET " + "quantity = " + (quantityInDB - quantity)
-					+ " WHERE id = " +  product_id;
-			st.executeUpdate(updateQuerry);
-			
+			prs = con.prepareStatement(query.getString("db.updateQuantityQuery"));
+			prs.setInt(1, quantityInDB);
+			prs.setInt(2, quantity);
+			prs.setInt(3, product_id);
+			prs.executeUpdate();			
 			System.out.println("Succsesfull update");
 		} catch (Exception e) {
 			System.out.println("Update data DB error: " + e.getMessage());
@@ -124,25 +130,26 @@ public class ManageOrders {
 
 	// Geri, 08.23 : Delete a Order from DB
 	public void orderDelete(int orderNumber) {
-		updateQuantityDeleteOrder(orderNumber);
+		//updateQuantityDeleteOrder(orderNumber);
 		try {
-			String querry = "DELETE FROM Orders WHERE order_number = "
-					+ orderNumber;
-			int test = st.executeUpdate(querry);
+			prs = con.prepareStatement(query.getString("db.deleteOrderQuery"));
+			prs.setInt(1, orderNumber);
+			int test = prs.executeUpdate();
 			if (test == 0) {
-				System.out.println("No order in the DB with this ID.");
+				System.out.println("No order in the DB with this number.");
 				throw new RuntimeException("Not in DB.");
 			}
-			st.executeUpdate(querry);
+			else{
+			prs.executeUpdate();
 			System.out.println("Succsesfull delete Order on this order number: "
-							+ orderNumber);
+							+ orderNumber);}
 		} catch (Exception e) {
 			System.out.println("Delete data from DB error: " + e.getMessage());
 		}
 	}
 	
-	// Geri, 08.24 method for increase the quantity in db when some one delete an order.		
-	private void updateQuantityDeleteOrder(int order_number){
+	// Geri, 08.24 method for increase the quantity in db when some one delete an order. Need to be re make.	
+	/*private void updateQuantityDeleteOrder(int order_number){
 		
 		List<beans.Order> Orders = createOrderList();
 		List<Integer> OrderdProducts = new ArrayList<Integer>() ;
@@ -234,16 +241,17 @@ public class ManageOrders {
 	}
 		};
 		
-
+*/
 		
 
 	// main for test
 	public static void main(String[] args) {
 		ManageOrders orderManager = new ManageOrders();
-		//orderManager.order(6, "'tom'", "'testP2'", "'Gizi'",200);
-		orderManager.createOrderList();
+		orderManager.order(6, "tom", "testP1", "Gizi",200);
+		//orderManager.createOrderList();
 		//orderManager.orderDelete(6);
 		//orderManager.orderUpdate(5, "'tom'", "'testP1'", "'Gizi'", 5, 1000);
+		//orderManager.updateQuantityOrder(100, 4);
 
 	}
 
