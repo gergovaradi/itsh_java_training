@@ -1,1 +1,6 @@
 2017-08-29 16:17:36,857 ERROR o.ManageCostumers [main] Send data to DB error: null
+2017-08-30 13:22:46,826 ERROR o.ManageCostumers [main] A big fat error, Send data to DB error: null
+2017-08-30 13:51:24,786 ERROR d.ConnetionToDB [main] DB connection error: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+2017-08-30 13:51:24,794 ERROR o.ManageOrders [main] Send data to DB error: null
+2017-08-30 13:58:49,455 ERROR d.ConnetionToDB [main] DB connection error: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+2017-08-30 13:58:49,460 ERROR o.ManageProducts [main] Send data to DB error: null

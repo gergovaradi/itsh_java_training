@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 import databaseConnection.ConnetionToDB;
 
 
-
 public class ManageCostumers {
 
 	private ConnetionToDB connection = new ConnetionToDB();

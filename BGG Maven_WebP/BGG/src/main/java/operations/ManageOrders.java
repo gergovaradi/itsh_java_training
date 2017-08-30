@@ -1,5 +1,7 @@
 package operations;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
@@ -18,6 +20,7 @@ public class ManageOrders {
 	private java.sql.Connection con = connection.getCon();
 	private ResourceBundle query = ResourceBundle.getBundle("querys",new Locale("hu","HU"));
 	private java.sql.PreparedStatement prs;
+	private static final Logger logger = LogManager.getLogger(ManageOrders.class);
 	
 	// Geri, 08.21 : Create a list of orders from DB data.
 	public List<beans.Order> createOrderList() {
@@ -37,11 +40,10 @@ public class ManageOrders {
 						userName, productName, quantity,order_id);
 				Orders.add(order);
 				// print line for test
-				System.out.println("Order number: " + orderNumber
-						+ " Orderd product: " + productName);
+				logger.info("print line for test: Order number: " + orderNumber + " Orderd product: " + productName);
 			}
 		} catch (Exception e) {
-			System.out.println("Get data from DB error: " + e.getMessage());
+			logger.error("Get data from DB error: " + e.getMessage());
 		}
 
 		return Orders;
@@ -85,8 +87,7 @@ public class ManageOrders {
 			customerId = rs.getInt("id");
 			
 			//print line for test
-			System.out.println("Uid: " + userId + ", " + "Pid: " + productId
-					+ ", " + "Cid: " + customerId + "Q= " + quantity + "ON= " + orderNumber);
+			logger.info("print line for test: Uid: " + userId + ", " + "Pid: " + productId + ", " + "Cid: " + customerId + "Q= " + quantity + "ON= " + orderNumber);
 			
 			prs = con.prepareStatement(query.getString("db.insertToOrdersQuery"));
 			prs.setInt(1, orderNumber);
@@ -95,13 +96,13 @@ public class ManageOrders {
 			prs.setInt(4, customerId);
 			prs.setInt(5, quantity);
 			prs.executeUpdate();
-			System.out.println("Succsesfull order");
+			logger.info("Successful order");
 			
 			// Decrease the quantity in the inventory:
 			updateQuantityOrder(quantity, productId);
 			
 		} catch (Exception e) {
-			System.out.println("Send data to DB error: " + e.getMessage());
+			logger.error("Send data to DB error: " + e.getMessage());
 		}
 		
 	}
@@ -121,10 +122,10 @@ public class ManageOrders {
 			prs.setInt(1, quantityInDB);
 			prs.setInt(2, quantity);
 			prs.setInt(3, product_id);
-			prs.executeUpdate();			
-			System.out.println("Succsesfull update");
+			prs.executeUpdate();
+			logger.info("Successful update");
 		} catch (Exception e) {
-			System.out.println("Update data DB error: " + e.getMessage());
+			logger.error("Update data DB error: " + e.getMessage());
 		}
 	}
 
@@ -136,15 +137,16 @@ public class ManageOrders {
 			prs.setInt(1, orderNumber);
 			int test = prs.executeUpdate();
 			if (test == 0) {
-				System.out.println("No order in the DB with this number.");
+				logger.warn("No order in the DB with this number.");
 				throw new RuntimeException("Not in DB.");
 			}
 			else{
-			prs.executeUpdate();
-			System.out.println("Succsesfull delete Order on this order number: "
-							+ orderNumber);}
+				prs.executeUpdate();
+				logger.info("Successfully deleted Order on this order number: " + orderNumber);
+			}
+
 		} catch (Exception e) {
-			System.out.println("Delete data from DB error: " + e.getMessage());
+			logger.error("Delete data from DB error: " + e.getMessage());
 		}
 	}
 	
@@ -178,7 +180,7 @@ public class ManageOrders {
 				
 				
 			} catch (Exception e) {
-				System.out.println("Delete data DB error: " + e.getMessage());
+				logger.error("Delete data DB error: " + e.getMessage());
 			}
 		}
 		}	
@@ -219,8 +221,7 @@ public class ManageOrders {
 			}
 			int customerId = rs.getInt("id");
 			// print line for test
-			System.out.println("Uid: " + userId + ", " + "Pid: " + productId
-					+ ", " + "Cid: " + customerId);
+			logger.info("print line for test: Uid: " + userId + ", " + "Pid: " + productId + ", " + "Cid: " + customerId");
 			
 			String updateToOrdersQuerry = "UPDATE Orders SET "
 					+ "order_number= "+ orderNumber
@@ -234,10 +235,10 @@ public class ManageOrders {
 					+ "quantity= "+ quantity + " WHERE id = " + id;
 			
 			st.executeUpdate(updateToOrdersQuerry);
-			System.out.println("Succsesfull order updtate");
+			logger.info("Successful order update");
 			
 	}catch (Exception e) {
-		System.out.println("Send data to DB error: " + e.getMessage());
+		logger.error("Send data to DB error: " + e.getMessage());
 	}
 		};
 		

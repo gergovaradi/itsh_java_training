@@ -1,5 +1,7 @@
 package operations;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ public class ManageProducts {
 	private java.sql.Connection con = connection.getCon();
 	private ResourceBundle query = ResourceBundle.getBundle("querys",new Locale("hu","HU"));
 	private java.sql.PreparedStatement prs;
+	private static final Logger logger = LogManager.getLogger(ManageProducts.class);
 
 	// Geri, 08.21 Create list of products
 	public List<beans.Product> createProductList() {
@@ -30,10 +33,10 @@ public class ManageProducts {
 				beans.Product product = new beans.Product(name, price, quantity);
 				productList.add(product);
 				// print line for test
-				System.out.println("Product name: " + name);
+				logger.info("print line for test: Product name: " + name);
 			}
 		} catch (Exception e) {
-			System.out.println("Get data from DB error: " + e.getMessage());
+			logger.error("Get data from DB error: " + e.getMessage());
 		}
 
 		return productList;
@@ -53,10 +56,10 @@ public class ManageProducts {
 				product = new beans.Product(name, price, quantity);
 				
 				// print line for test
-				System.out.println("Product name: " + name);
+				logger.info("print line for test: Product name: " + name);
 			}
 		} catch (Exception e) {
-			System.out.println("Get data from DB error: " + e.getMessage());
+			logger.error("Get data from DB error: " + e.getMessage());
 		}
 
 		return product;
@@ -70,9 +73,9 @@ public class ManageProducts {
 			prs.setDouble(2, price);
 			prs.setInt(3, quantity);
 			prs.executeUpdate();
-			System.out.println("Succsesfull product registration: " + product_name);
+			logger.info("Successful product registration: " + product_name);
 		} catch (Exception e) {
-			System.out.println("Send data to DB error: " + e.getMessage());
+			logger.error("Send data to DB error: " + e.getMessage());
 		}
 	}
 
@@ -84,15 +87,15 @@ public class ManageProducts {
 			prs.setInt(1, ID);
 			int test = prs.executeUpdate();
 			if (test == 0) {
-				System.out.println("No product in the DB with this ID.");
+				logger.warn("No product in the DB with this ID.");
 				throw new RuntimeException("Not in DB.");
 			}
 			else{
 			prs.executeUpdate();
-			System.out.println("Succsesfull delete Product on this ID: " + ID);
+			logger.info("Successfully deleted Product on this ID: " + ID);
 			}
 		} catch (Exception e) {
-			System.out.println("Send data to DB error: " + e.getMessage());
+			logger.error("Send data to DB error: " + e.getMessage());
 		}
 	}
 
@@ -108,9 +111,9 @@ public class ManageProducts {
 			prs.setInt(3, quantity);
 			prs.setInt(4, id);
 			prs.executeUpdate();
-			System.out.println("Succsesfull update on: " + product_name);
+			logger.info("Successful update on: " + product_name);
 		} catch (Exception e) {
-			System.out.println("Send data to DB error: " + e.getMessage());
+			logger.error("Send data to DB error: " + e.getMessage());
 		}
 	}
 
