@@ -39,8 +39,7 @@ public class ManageCostumers {
 						email, fullName, phone);
 				UserInformationList.add(customer);
 				// print line for test
-
-				logger.info("Costumer phonenumber: " + phone + " ");
+				logger.info("print line for test: Costumer phonenumber: " + phone + " ");
 			}
 		} catch (Exception e) {
 			logger.error("Get data from DB error: " + e.getMessage());
