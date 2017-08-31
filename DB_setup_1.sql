@@ -103,19 +103,14 @@ ON user_account.id = user_information.id;
         BGG_tax_number INTEGER not null,
   );
  */
- CREATE TABLE Bill(
-        Bill_Num INTEGER not null,
-        Order_id INTEGER not null,
-        Billing_Date datetime not null,
-        Amount double precision not null,
-        primary key (Bill_Num)
+ CREATE TABLE BGG(
+        companyid INTEGER not null AUTO_INCREMENT,
+        company_name varchar(60) not null,
+        company_address varchar(60) not null,
+        tax_number varchar(60) not null,
     );
  
-  CREATE TABLE Seller(
-      Name varchar(30) not null,
-      id INTEGER not null,
-      primary key (id)
-    );   
+ -- CREATE VIEW 'Bill' AS SELECT orders.order_number, orders.date, Customers.Full_Name,Customers.Address,BGG.company_name,BGG.company_address,BGG.tax_number,Products.
 
 
 
