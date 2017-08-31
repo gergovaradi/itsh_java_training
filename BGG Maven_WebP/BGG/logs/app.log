@@ -1,2 +1,6 @@
-2017-08-30 16:38:43,891 ERROR d.ConnetionToDB [main] DB connection error: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
-2017-08-30 16:38:43,898 ERROR o.ManageOrders [main] Send data to DB error: null
+2017-08-31 11:29:56,648 ERROR d.ConnetionToDB [main] DB connection error: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+2017-08-31 11:29:56,693 ERROR o.ManageProducts [main] Send data to DB error: null
+2017-08-31 11:31:54,024 ERROR d.ConnetionToDB [main] DB connection error: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+2017-08-31 11:31:54,035 ERROR o.ManageProducts [main] Send data to DB error: null
+2017-08-31 13:01:25,611 ERROR d.ConnetionToDB [main] DB connection error: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+2017-08-31 13:01:25,620 ERROR o.ManageProducts [main] Send data to DB error: null
