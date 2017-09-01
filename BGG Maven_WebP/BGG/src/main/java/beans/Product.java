@@ -41,8 +41,26 @@ public class Product implements Serializable {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
-	
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Product product = (Product) o;
+
+		if (Double.compare(product.getPrice(), getPrice()) != 0) return false;
+		if (getQuantity() != product.getQuantity()) return false;
+		return getName().equals(product.getName());
+	}
+
+	@Override
+	public int hashCode() {
+		int result = getName().hashCode();
+		long temp = Double.doubleToLongBits(getPrice());
+		result = 31 * result + (int) (temp ^ (temp >>> 32));
+		result = 31 * result + getQuantity();
+		return result;
+	}
 }
 

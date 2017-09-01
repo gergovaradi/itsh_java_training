@@ -63,8 +63,25 @@ public class Customers implements Serializable{
 		this.email = email;
 	}
 
-	
-	
-	
-	
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Customers customers = (Customers) o;
+
+		if (!getName().equals(customers.getName())) return false;
+		if (!getAddress().equals(customers.getAddress())) return false;
+		if (!getPhone().equals(customers.getPhone())) return false;
+		return getEmail().equals(customers.getEmail());
+	}
+
+	@Override
+	public int hashCode() {
+		int result = getName().hashCode();
+		result = 31 * result + getAddress().hashCode();
+		result = 31 * result + getPhone().hashCode();
+		result = 31 * result + getEmail().hashCode();
+		return result;
+	}
 }

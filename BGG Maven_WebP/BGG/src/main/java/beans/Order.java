@@ -76,7 +76,30 @@ public class Order implements Serializable {
 	public void setOrder_id(int order_id) {
 		this.order_id = order_id;
 	}
-	
-	
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Order order = (Order) o;
+
+		if (getOrderNumber() != order.getOrderNumber()) return false;
+		if (getQuantity() != order.getQuantity()) return false;
+		if (getOrder_id() != order.getOrder_id()) return false;
+		if (!getOrderDate().equals(order.getOrderDate())) return false;
+		if (!getUserName().equals(order.getUserName())) return false;
+		return getProductName().equals(order.getProductName());
+	}
+
+	@Override
+	public int hashCode() {
+		int result = getOrderNumber();
+		result = 31 * result + getOrderDate().hashCode();
+		result = 31 * result + getUserName().hashCode();
+		result = 31 * result + getProductName().hashCode();
+		result = 31 * result + getQuantity();
+		result = 31 * result + getOrder_id();
+		return result;
+	}
 }
