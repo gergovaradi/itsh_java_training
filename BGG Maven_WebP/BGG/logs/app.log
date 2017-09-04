@@ -1,6 +1,4 @@
-2017-08-31 11:29:56,648 ERROR d.ConnetionToDB [main] DB connection error: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
-2017-08-31 11:29:56,693 ERROR o.ManageProducts [main] Send data to DB error: null
-2017-08-31 11:31:54,024 ERROR d.ConnetionToDB [main] DB connection error: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
-2017-08-31 11:31:54,035 ERROR o.ManageProducts [main] Send data to DB error: null
-2017-08-31 13:01:25,611 ERROR d.ConnetionToDB [main] DB connection error: Could not create connection to database server. Attempted reconnect 3 times. Giving up.
-2017-08-31 13:01:25,620 ERROR o.ManageProducts [main] Send data to DB error: null
+2017-09-04 10:25:16,308 ERROR o.ManageCustomers [main] Get data from DB error: Can't find resource for bundle java.util.PropertyResourceBundle, key db.getAllCostumerData
+2017-09-04 10:26:53,624 ERROR o.ManageCustomers [main] Get data from DB error: Can't find resource for bundle java.util.PropertyResourceBundle, key db.getAllCostumerData
+2017-09-04 11:18:30,212 ERROR o.ManageOrders [main] Update data DB error: Illegal operation on empty result set.
+2017-09-04 11:22:43,932 ERROR o.ManageOrders [main] Send data to DB error: Customer not found.

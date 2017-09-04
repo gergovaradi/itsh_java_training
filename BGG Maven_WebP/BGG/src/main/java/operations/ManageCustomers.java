@@ -2,6 +2,9 @@ package operations;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,25 +14,24 @@ import java.util.ResourceBundle;
 import databaseConnection.ConnetionToDB;
 
 
-public class ManageCostumers {
+public class ManageCustomers {
 
 	private ConnetionToDB connection = new ConnetionToDB();
-	private ResultSet rs = connection.getRs();
-	private java.sql.Connection con = connection.getCon();
 	private ResourceBundle query = ResourceBundle.getBundle("querys",new Locale("hu","HU"));
-	private java.sql.PreparedStatement prs;
-
-	private static final Logger logger = LogManager.getLogger(ManageCostumers.class);
+	private static final Logger logger = LogManager.getLogger(ManageCustomers.class);
 	
 
-	// Geri, 08.21 : Create a list of costumers from DB data.
+	
 	public List<beans.Customers> createCostumerList() {
 		logger.info("Entering the createCostumerList method");
 
 		List<beans.Customers> UserInformationList = new ArrayList<beans.Customers>();
-		try {
-			prs = con.prepareStatement(query.getString("db.getAllCostumerData"));
-			rs = prs.executeQuery();
+		
+		try(Connection con = connection.openConnection();
+			PreparedStatement prs = con.prepareStatement(query.getString("db.getAllCostumerdata"));
+			ResultSet rs = prs.executeQuery();	
+			){
+			
 			while (rs.next()) {
 				String address = rs.getString("address");
 				String email = rs.getString("email");
@@ -39,6 +41,7 @@ public class ManageCostumers {
 						email, fullName, phone);
 				UserInformationList.add(customer);
 				// print line for test
+				System.out.println("pN: " + phone);
 				logger.info("print line for test: Costumer phonenumber: " + phone + " ");
 			}
 		} catch (Exception e) {
@@ -49,20 +52,13 @@ public class ManageCostumers {
 		
 	}
 
-	// Geri, 08.21 : Execute inserts to table "Customers" when a user register a
-	// customer.
+	
 	public void customerRegistration(String fullName, String email,
 			String phone, String address) {
-		
-		/*StringBuilder sb = new StringBuilder("INSERT INTO Customers (address, email, full_Name, phone) VALUES(");
-		sb.append(address).append(",").append(email).append(",").append(fullName).append(",").append(phone).append(");");
-		
-		MessageFormat mformat = new MessageFormat("INSERT INTO Customers (full_name, email, phone, address) VALUES(''{0}'',''{1}'',''{2}'',''{3}'')");
-		Object[] args = {fullName,email,phone,address};
-		System.out.println(mformat.format(args));*/
-		
-		try {
-			prs = con.prepareStatement( query.getString("db.registrateCostummer"));
+				
+		try(Connection con = connection.openConnection();
+			PreparedStatement prs = con.prepareStatement( query.getString("db.registrateCostummer"));
+				) {	
 			prs.setString(1, fullName);
 			prs.setString(2, email);
 			prs.setString(3, phone);
@@ -74,10 +70,10 @@ public class ManageCostumers {
 		}
 	}
 
-	// Geri, 08.23 : Delete a Customer from DB
 	public void customerDelete(int ID) {
-		try {
-			prs = con.prepareStatement( query.getString("db.deleteCostumer"));
+		try(Connection con = connection.openConnection();
+			PreparedStatement prs = con.prepareStatement( query.getString("db.deleteCostumer"));
+				) {		
 			prs.setInt(1, ID);
 			
 	// check the id in DB
@@ -94,31 +90,31 @@ public class ManageCostumers {
 		}
 	}
 
-	// Geri, 08.23 : Update Customer
-
+	
 	public void customerUpdate(String fullName, String address, String email,
 			String phone, int id) {
-		try {
-			prs = con.prepareStatement( query.getString("db.updateCostumer"));
+		try(Connection con = connection.openConnection();
+			PreparedStatement prs = con.prepareStatement( query.getString("db.updateCostumer"));	
+			){
 			prs.setString(1, fullName);
 			prs.setString(2, address);
 			prs.setString(3, email);
 			prs.setString(4, phone);
 			prs.setInt(5, id);
 			prs.executeUpdate();
-
 			logger.info("Succsesful update on: " + fullName + " id: " + id);
 		} catch (Exception e) {
 			logger.error("Send data to DB error: " + e.getMessage());
 		}
 	}
+	
 
 	public static void main(String[] args) {
-		ManageCostumers costumermanager = new ManageCostumers();
+		ManageCustomers costumermanager = new ManageCustomers();
 		//costumermanager.createCostumerList();
 		//costumermanager.customerRegistration("Gizi", "gizi@test.com","06304294821", "test street 52.");
-		//costumermanager.customerDelete(10);
-		costumermanager.customerUpdate("Gergő Mátrai", "1191 BP","gergo.matrai@gmatrai.com", "06304892599", 1);
+		//costumermanager.customerDelete(12);
+		costumermanager.customerUpdate("Gergo Matrai", "1191 BP","gergo.matrai@gmatrai.com", "0612793677", 1);
 		
 	}
 }

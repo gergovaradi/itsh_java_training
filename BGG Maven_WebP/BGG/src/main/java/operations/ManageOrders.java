@@ -2,8 +2,10 @@ package operations;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,20 +17,17 @@ import databaseConnection.ConnetionToDB;
 public class ManageOrders {
 
 	private ConnetionToDB connection = new ConnetionToDB();
-	private ResultSet rs = connection.getRs();
-	private Statement st = connection.getSt();
-	private java.sql.Connection con = connection.getCon();
 	private ResourceBundle query = ResourceBundle.getBundle("querys",new Locale("hu","HU"));
-	private java.sql.PreparedStatement prs;
 	private static final Logger logger = LogManager.getLogger(ManageOrders.class);
 	
-	// Geri, 08.21 : Create a list of orders from DB data.
 	public List<beans.Order> createOrderList() {
 		List<beans.Order> Orders = new ArrayList<beans.Order>();
 
-		try {
-			prs = con.prepareStatement(query.getString("db.getAllOrderData"));
-			rs = prs.executeQuery();
+		try(Connection con = connection.openConnection();
+			PreparedStatement prs = con.prepareStatement(query.getString("db.getAllOrderData"));
+			ResultSet rs = prs.executeQuery();	
+				) {
+			
 			while (rs.next()) {
 				int orderNumber = rs.getInt("order_number");
 				LocalDate orderDate = rs.getDate("date").toLocalDate();
@@ -40,6 +39,7 @@ public class ManageOrders {
 						userName, productName, quantity,order_id);
 				Orders.add(order);
 				// print line for test
+				System.out.println("ordN: " +orderNumber);
 				logger.info("print line for test: Order number: " + orderNumber + " Orderd product: " + productName);
 			}
 		} catch (Exception e) {
@@ -49,26 +49,29 @@ public class ManageOrders {
 		return Orders;
 	}
 
-	// Geri, 08.22 : save a new order in DB
 	public void order(int orderNumber, String userName, String productName,
 			String customerName, int quantity) {
-
-		try {
-			prs = con.prepareStatement(query.getString("db.selectUserIdQuery"));
+		
+		ResultSet rs = null;
+		
+		try(Connection con = connection.openConnection();
+			PreparedStatement prs = con.prepareStatement(query.getString("db.selectUserIdQuery"));
+			PreparedStatement prs2 = con.prepareStatement(query.getString("db.selectProductIdQuery"));
+			PreparedStatement prs3 = con.prepareStatement(query.getString("db.selectCostumerIdQuery"));
+			PreparedStatement prs4 = con.prepareStatement(query.getString("db.insertToOrdersQuery"));
+				) {		
 			prs.setString(1, userName);
 			rs = prs.executeQuery();
 			int userId = 0;
-			// set the cursor to the correct place (it is default before then first row)
 			rs.next();
-			// getRow gives back the number of rows of resultSet, if 0 then the user is not in the DB
 			if (rs.getRow() == 0) {
 				throw new RuntimeException("User not found.");
 			}
 			userId = rs.getInt("id");
 
-			prs = con.prepareStatement(query.getString("db.selectProductIdQuery"));
-			prs.setString(1, productName);
-			rs = prs.executeQuery();
+			
+			prs2.setString(1, productName);
+			rs = prs2.executeQuery();
 			int productId = 0;
 			rs.next();
 			if (rs.getRow() == 0) {
@@ -76,9 +79,9 @@ public class ManageOrders {
 			}
 			productId = rs.getInt("id");
 
-			prs = con.prepareStatement(query.getString("db.selectCostumerIdQuery"));
-			prs.setString(1, customerName);
-			rs = prs.executeQuery();
+			
+			prs3.setString(1, customerName);
+			rs = prs3.executeQuery();
 			int customerId = 0;
 			rs.next();
 			if (rs.getRow() == 0) {
@@ -89,13 +92,12 @@ public class ManageOrders {
 			//print line for test
 			logger.info("print line for test: Uid: " + userId + ", " + "Pid: " + productId + ", " + "Cid: " + customerId + "Q= " + quantity + "ON= " + orderNumber);
 			
-			prs = con.prepareStatement(query.getString("db.insertToOrdersQuery"));
-			prs.setInt(1, orderNumber);
-			prs.setInt(2, productId);
-			prs.setInt(3, userId);
-			prs.setInt(4, customerId);
-			prs.setInt(5, quantity);
-			prs.executeUpdate();
+			prs4.setInt(1, orderNumber);
+			prs4.setInt(2, productId);
+			prs4.setInt(3, userId);
+			prs4.setInt(4, customerId);
+			prs4.setInt(5, quantity);
+			prs4.executeUpdate();
 			logger.info("Successful order");
 			
 			// Decrease the quantity in the inventory:
@@ -104,36 +106,46 @@ public class ManageOrders {
 		} catch (Exception e) {
 			logger.error("Send data to DB error: " + e.getMessage());
 		}
+		finally{
+			try { rs.close(); } 
+			catch (Exception e) { System.out.println("ResultSet can not be closed. Error: " + e.getMessage()); }
+		}
 		
 	}
+
 	
-	// Geri, 08.24 method for decrease the quantity in db when some one order a product		
 	private void updateQuantityOrder(int quantity, int product_id){
 		
 		int quantityInDB;
 		
-		try {
-			prs = con.prepareStatement(query.getString("db.getProductQuantityQuery"));
+		try(Connection con = connection.openConnection();
+			PreparedStatement prs = con.prepareStatement(query.getString("db.getProductQuantityQuery"));
+			PreparedStatement prs2 = con.prepareStatement(query.getString("db.updateQuantityQuery"));
+			) {
+			
 			prs.setInt(1, product_id);
-			rs = prs.executeQuery();
+			ResultSet rs = prs.executeQuery();
 			rs.next();
 			quantityInDB = rs.getInt("quantity");
-			prs = con.prepareStatement(query.getString("db.updateQuantityQuery"));
-			prs.setInt(1, quantityInDB);
-			prs.setInt(2, quantity);
-			prs.setInt(3, product_id);
-			prs.executeUpdate();
+			
+			prs2.setInt(1, quantityInDB);
+			prs2.setInt(2, quantity);
+			prs2.setInt(3, product_id);
+			prs2.executeUpdate();
 			logger.info("Successful update");
+			
 		} catch (Exception e) {
 			logger.error("Update data DB error: " + e.getMessage());
 		}
 	}
 
-	// Geri, 08.23 : Delete a Order from DB
+
 	public void orderDelete(int orderNumber) {
 		//updateQuantityDeleteOrder(orderNumber);
-		try {
-			prs = con.prepareStatement(query.getString("db.deleteOrderQuery"));
+		try(Connection con = connection.openConnection();
+			PreparedStatement prs = con.prepareStatement(query.getString("db.deleteOrderQuery"));	
+			) {
+			
 			prs.setInt(1, orderNumber);
 			int test = prs.executeUpdate();
 			if (test == 0) {
@@ -150,7 +162,7 @@ public class ManageOrders {
 		}
 	}
 	
-	// Geri, 08.24 method for increase the quantity in db when some one delete an order. Need to be re make.	
+	//method for increase the quantity in db when some one delete an order. Need to be re make.	
 	/*private void updateQuantityDeleteOrder(int order_number){
 		
 		List<beans.Order> Orders = createOrderList();
@@ -248,7 +260,7 @@ public class ManageOrders {
 	// main for test
 	public static void main(String[] args) {
 		ManageOrders orderManager = new ManageOrders();
-		orderManager.order(6, "tom", "testP1", "Gizi",200);
+		orderManager.order(7, "tom", "testP1", "Gergo Matrai",300);
 		//orderManager.createOrderList();
 		//orderManager.orderDelete(6);
 		//orderManager.orderUpdate(5, "'tom'", "'testP1'", "'Gizi'", 5, 1000);

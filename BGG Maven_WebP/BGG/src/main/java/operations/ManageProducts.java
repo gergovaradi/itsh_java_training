@@ -2,6 +2,9 @@ package operations;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,26 +16,24 @@ import databaseConnection.ConnetionToDB;
 public class ManageProducts {
 
 	private ConnetionToDB connection = new ConnetionToDB();
-	private ResultSet rs = connection.getRs();
-	private java.sql.Connection con = connection.getCon();
 	private ResourceBundle query = ResourceBundle.getBundle("querys",new Locale("hu","HU"));
-	private java.sql.PreparedStatement prs;
 	private static final Logger logger = LogManager.getLogger(ManageProducts.class);
 
-	// Geri, 08.21 Create list of products
+
 	public List<beans.Product> createProductList() {
 		List<beans.Product> productList = new ArrayList<beans.Product>();
-		try {
-			prs = con.prepareStatement(query.getString("db.getAllProductdata"));
-			rs = prs.executeQuery();
+		
+		try(Connection con = connection.openConnection();
+			PreparedStatement prs = con.prepareStatement(query.getString("db.getAllProductdata"));
+			ResultSet rs = prs.executeQuery();	
+			) {
+			
 			while (rs.next()) {
 				String name = rs.getString("name");
 				double price = rs.getDouble("price");
 				int quantity = rs.getInt("quantity");
-				// int productId = rs.getInt("id");
 				beans.Product product = new beans.Product(name, price, quantity);
 				productList.add(product);
-				// print line for test
 				logger.info("print line for test: Product name: " + name);
 			}
 		} catch (Exception e) {
@@ -44,18 +45,19 @@ public class ManageProducts {
 //get a product from DB
 	public beans.Product getSpecificProduct(int id) {
 		beans.Product product = null;
-		try {
-			prs = con.prepareStatement(query.getString("db.getAllProductdata"));
+		try(Connection con = connection.openConnection();
+			PreparedStatement prs = con.prepareStatement(query.getString("db.getAllProductdata"));
+			ResultSet rs = prs.executeQuery();
+			){
+			
 			prs.setInt(1, id);
-			rs = prs.executeQuery();
+			
 			while (rs.next()) {
 				String name = rs.getString("name");
 				double price = rs.getDouble("price");
 				int quantity = rs.getInt("quantity");
-				// int productId = rs.getInt("id");
 				product = new beans.Product(name, price, quantity);
 				
-				// print line for test
 				logger.info("print line for test: Product name: " + name);
 			}
 		} catch (Exception e) {
@@ -64,11 +66,12 @@ public class ManageProducts {
 
 		return product;
 	}
-	// Geri, 08.23 : Execute inserts to table "Products".
+
 	public void productRegistration(String product_name, double price,
 			int quantity) {
-		try {
-			prs = con.prepareStatement(query.getString("db.registrateProduct"));
+		try (Connection con = connection.openConnection();
+			 PreparedStatement prs = con.prepareStatement(query.getString("db.registrateProduct"));
+			){
 			prs.setString(1, product_name);
 			prs.setDouble(2, price);
 			prs.setInt(3, quantity);
@@ -79,11 +82,13 @@ public class ManageProducts {
 		}
 	}
 
-	// Geri, 08.23 : Delete a Product from DB
+
 
 	public void productDelete(int ID) {
-		try {
-			prs = con.prepareStatement(query.getString("db.deleteProduct"));
+		try(Connection con = connection.openConnection();
+			PreparedStatement prs = con.prepareStatement(query.getString("db.deleteProduct"));	
+			) {
+			
 			prs.setInt(1, ID);
 			int test = prs.executeUpdate();
 			if (test == 0) {
@@ -99,13 +104,15 @@ public class ManageProducts {
 		}
 	}
 
-	// Geri, 08.23 : Update Product
+
 
 	public void productUpdate(String product_name, double price, int quantity,
 			int id) {
 
-		try {
-			prs = con.prepareStatement(query.getString("db.productUpdate"));
+		try(Connection con = connection.openConnection();
+			PreparedStatement prs = con.prepareStatement(query.getString("db.productUpdate"));
+			){
+			
 			prs.setString(1, product_name);
 			prs.setDouble(2, price);
 			prs.setInt(3, quantity);
@@ -119,9 +126,9 @@ public class ManageProducts {
 
 	public static void main(String[] args) {
 		ManageProducts productmanager = new ManageProducts();
-		//productmanager.productUpdate("testP2", 5, 1000, 4);
-		//productmanager.productDelete(1);
-		productmanager.productRegistration("testP3", 5, 1000);
+		productmanager.productUpdate("testP3", 5, 1000, 4);
+		//productmanager.productDelete(7);
+		//productmanager.productRegistration("testP5", 5, 1000);
 	}
 
 }
