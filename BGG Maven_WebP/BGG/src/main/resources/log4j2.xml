@@ -19,7 +19,7 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Root level="warn">
+        <Root level="all">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="RollingFile"/>
         </Root>
