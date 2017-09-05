@@ -1034,61 +1034,6 @@ bg=white</panel_attributes>
     <additional_attributes>10.0;20.0;1480.0;20.0</additional_attributes>
   </element>
   <element>
-    <id>UMLUseCase</id>
-    <coordinates>
-      <x>650</x>
-      <y>1940</y>
-      <w>160</w>
-      <h>70</h>
-    </coordinates>
-    <panel_attributes>Go to login page</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>540</x>
-      <y>1950</y>
-      <w>130</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes>10.0;20.0;110.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLUseCase</id>
-    <coordinates>
-      <x>370</x>
-      <y>1940</y>
-      <w>180</w>
-      <h>70</h>
-    </coordinates>
-    <panel_attributes>Click log out</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>240</x>
-      <y>1950</y>
-      <w>150</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes>10.0;20.0;130.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLActor</id>
-    <coordinates>
-      <x>190</x>
-      <y>1940</y>
-      <w>60</w>
-      <h>110</h>
-    </coordinates>
-    <panel_attributes>Seller</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
       <x>20</x>
